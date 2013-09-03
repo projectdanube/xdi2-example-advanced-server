@@ -32,7 +32,7 @@ public class SimpleMessagingSample {
         MessageEnvelope messageEnvelope = new MessageEnvelope();
         MessageCollection messageCollection = messageEnvelope.getMessageCollection(XDI3Segment.create("=sender"), true);
         Message message = messageCollection.getMessage(true);
-        message.createGetOperation(messageEnvelope.getGraph().getRootContextNode().getXri());
+        message.createGetOperation(XDI3Segment.create("=markus"));
 
         // execute the message
 
