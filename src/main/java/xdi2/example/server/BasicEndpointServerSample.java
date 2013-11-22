@@ -27,7 +27,7 @@ public class BasicEndpointServerSample {
 		bi.setBootstrapOwner(XDI3Segment.create("[=]!1111"));
 		bi.setBootstrapRootLinkContract(true);
 
-		messagingTarget.getInterceptors().add(bi);
+		messagingTarget.getInterceptors().addInterceptor(bi);
 
 		// mount messaging target
 
