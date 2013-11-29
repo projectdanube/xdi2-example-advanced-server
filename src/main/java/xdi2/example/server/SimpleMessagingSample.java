@@ -31,7 +31,7 @@ public class SimpleMessagingSample {
 
         MessageEnvelope messageEnvelope = new MessageEnvelope();
         MessageCollection messageCollection = messageEnvelope.getMessageCollection(XDI3Segment.create("=sender"), true);
-        Message message = messageCollection.getMessage(true);
+        Message message = messageCollection.createMessage();
         message.createGetOperation(XDI3Segment.create("=markus"));
 
         // execute the message
