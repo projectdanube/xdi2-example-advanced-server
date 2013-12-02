@@ -31,7 +31,7 @@ public class BasicEndpointServerSample {
 
 		// mount messaging target
 
-		endpointServer.getEndpointServlet().getHttpEndpointRegistry().mountMessagingTarget("/", messagingTarget);
+		endpointServer.getEndpointServlet().getHttpMessagingTargetRegistry().mountMessagingTarget("/", messagingTarget);
 
 		// start the server
 
