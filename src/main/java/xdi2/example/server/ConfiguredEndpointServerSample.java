@@ -3,7 +3,7 @@ package xdi2.example.server;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
-import xdi2.server.embedded.EndpointServerEmbedded;
+import xdi2.transport.http.embedded.EndpointServerEmbedded;
 
 public class ConfiguredEndpointServerSample {
 
