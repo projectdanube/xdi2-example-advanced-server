@@ -5,18 +5,14 @@
 
 	<!-- XDI ENDPOINT REGISTRY AND TRANSPORT -->
 
-	<bean id="HttpMessagingTargetRegistry" class="xdi2.server.registry.HttpMessagingTargetRegistry" init-method="init" destroy-method="shutdown" />
+	<bean id="HttpMessagingTargetRegistry" class="xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry" init-method="init" destroy-method="shutdown" />
 
-	<bean id="HttpTransport" class="xdi2.server.transport.HttpTransport" init-method="init" destroy-method="shutdown">
+	<bean id="HttpTransport" class="xdi2.transport.impl.http.HttpTransport" init-method="init" destroy-method="shutdown">
 		<property name="httpMessagingTargetRegistry" ref="HttpMessagingTargetRegistry" />
 		<property name="interceptors">
 			<util:list>
-				<bean class="xdi2.server.interceptor.impl.DebugHttpTransportInterceptor" />
-				<bean class="xdi2.server.interceptor.impl.XriResolutionHttpTransportInterceptor">
-					<property name="resolvePath" value="/resolve" />
-					<property name="targetPath" value="/users" />
-					<property name="registryGraph" ref="registryGraph" />
-				</bean>
+				<bean class="xdi2.transport.impl.http.interceptor.impl.DebugHttpTransportInterceptor" />
+				<bean class="xdi2.transport.impl.http.interceptor.impl.StatusHttpTransportInterceptor" />
 			</util:list>
 		</property>
 	</bean>
@@ -26,24 +22,12 @@
 	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
 		<property name="converters">
 			<list>
-				<bean class="xdi2.server.spring.XDI2SpringConverter" />
+				<bean class="xdi2.transport.spring.XDI2SpringConverter" />
 			</list>
 		</property>
 	</bean>
 
 	<!-- MESSAGING TARGET TO BE USED AS A PROTOTYPE FOR MESSAGING TARGET FACTORIES -->
-
-	<bean id="facebookContributor" class="xdi2.connector.facebook.contributor.FacebookContributor">
-		<property name="facebookApi">
-			<bean class="xdi2.connector.facebook.api.FacebookApi" init-method="init" destroy-method="destroy">
-				<property name="appId" value="420250631345354" />
-				<property name="appSecret" value="c2feeda99926ab3c6096beaa8e6eca73" />
-			</bean>
-		</property>
-		<property name="facebookMapping">
-			<bean class="xdi2.connector.facebook.mapping.FacebookMapping" />
-		</property>
-	</bean>
 
 	<bean id="prototypeGraphFactory" class="xdi2.core.impl.memory.MemoryGraphFactory">
 	</bean>
@@ -70,19 +54,13 @@
 					</property>
 				</bean>
 				<bean class="xdi2.messaging.target.interceptor.impl.linkcontract.LinkContractInterceptor" />
-				<ref bean="facebookContributor" />
-			</util:list>
-		</property>
-		<property name="contributors">
-			<util:list>
-				<ref bean="facebookContributor" />
 			</util:list>
 		</property>
 	</bean>
 
 	<!-- MESSAGING TARGET FACTORY at /any/* -->
 
-	<bean name="/any/*" class="xdi2.server.factory.impl.AnyGraphMessagingTargetFactory">
+	<bean name="/any/*" class="xdi2.transport.impl.http.factory.impl.AnyGraphMessagingTargetFactory">
 		<property name="prototypeMessagingTarget" ref="prototypeMessagingTarget" />
 	</bean>
 
@@ -95,7 +73,7 @@
 
 	<bean id="registryGraph" factory-bean="registryGraphfactory" factory-method="openGraph" />
 
-	<bean name="/users/*" class="xdi2.server.factory.impl.RegistryGraphMessagingTargetFactory">
+	<bean name="/users/*" class="xdi2.transport.impl.http.factory.impl.RegistryGraphMessagingTargetFactory">
 		<property name="prototypeMessagingTarget" ref="prototypeMessagingTarget" />
 		<property name="registryGraph" ref="registryGraph" />
 	</bean>
@@ -186,32 +164,53 @@
 		</property>
 	</bean>
 
-	<!-- MESSAGING TARGET at /=markus -->
+	<!-- MESSAGING TARGET at /=alice -->
 	<!-- MessagingTarget: GraphMessagingTarget backed by a MemoryGraph -->
 
 	<bean id="graphfactory4" class="xdi2.core.impl.memory.MemoryGraphFactory">
 	</bean>
 
-	<bean id="graph4" factory-bean="graphfactory4" factory-method="openGraph" />
+	<bean id="graph4" factory-bean="graphfactory4" factory-method="openGraph">
+		<constructor-arg><value>([=]!:uuid:1111)</value></constructor-arg>
+	</bean>
 
-	<bean name="/=markus" class="xdi2.messaging.target.impl.graph.GraphMessagingTarget">
+	<bean name="/=alice" class="xdi2.messaging.target.impl.graph.GraphMessagingTarget">
 		<property name="graph" ref="graph4" />
 		<property name="interceptors">
 			<util:list>
 				<bean class="xdi2.messaging.target.interceptor.impl.BootstrapInterceptor">
-					<property name="bootstrapOwner" value="[=]!:uuid:91f28153-f600-ae24-91f2-8153f600ae24" />
+					<property name="bootstrapOwner" value="[=]!:uuid:1111" />
 					<property name="bootstrapOwnerSynonyms">
 						<util:list>
-							<value>=markus</value>
+							<value>=alice</value>
 						</util:list>
 					</property>
 					<property name="bootstrapRootLinkContract" value="true" />
 					<property name="bootstrapPublicLinkContract" value="true" />
+					<property name="bootstrapGraph">
+						<value>
+							{$self}$to$anon$from$public$do/$get/{$self}$msg$encrypt$keypair&lt;$public&gt;&lt;$key&gt;
+							{$self}$to$anon$from$public$do/$get/({$self}$msg$encrypt$keypair/$is+/{})
+							{$self}$to$anon$from$public$do/$get/{$self}$msg$sig$keypair&lt;$public&gt;&lt;$key&gt;
+							{$self}$to$anon$from$public$do/$get/({$self}$msg$sig$keypair/$is+/{})
+						</value>
+					</property>
+					<property name="bootstrapMessageEnvelope">
+						<value>
+							$anon[$msg]!1$do/$do$keypair/({$self}$msg$encrypt$keypair/$is+/$rsa$2048)
+							$anon[$msg]!1$do/$do$keypair/({$self}$msg$sig$keypair/$is+/$rsa$2048)
+						</value>
+					</property>
 				</bean>
 				<bean class="xdi2.messaging.target.interceptor.impl.VariablesInterceptor" />
 				<bean class="xdi2.messaging.target.interceptor.impl.RefInterceptor" />
 				<bean class="xdi2.messaging.target.interceptor.impl.ToInterceptor" />
 				<bean class="xdi2.messaging.target.interceptor.impl.linkcontract.LinkContractInterceptor" />
+			</util:list>
+		</property>
+		<property name="contributors">
+			<util:list>
+				<bean id="generateKeyContributor" class="xdi2.messaging.target.contributor.impl.keygen.GenerateKeyContributor" />
 			</util:list>
 		</property>
 	</bean>
