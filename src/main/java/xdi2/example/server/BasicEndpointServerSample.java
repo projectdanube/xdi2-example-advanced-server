@@ -5,7 +5,7 @@ import xdi2.core.impl.memory.MemoryGraphFactory;
 import xdi2.core.xri3.XDI3Segment;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
 import xdi2.messaging.target.interceptor.impl.BootstrapInterceptor;
-import xdi2.transport.http.embedded.EndpointServerEmbedded;
+import xdi2.transport.impl.http.embedded.EndpointServerEmbedded;
 
 public class BasicEndpointServerSample {
 
@@ -24,7 +24,7 @@ public class BasicEndpointServerSample {
 		// add interceptor
 
 		BootstrapInterceptor bi = new BootstrapInterceptor();
-		bi.setBootstrapOwner(XDI3Segment.create("[=]!1111"));
+		bi.setBootstrapOwner(XDI3Segment.create("[=]!:uuid:1111"));
 		bi.setBootstrapRootLinkContract(true);
 
 		messagingTarget.getInterceptors().addInterceptor(bi);
