@@ -23,14 +23,14 @@
 		<property name="contextPath" value="/" />
 	</bean>
 
-	<bean id="EndpointServerEmbedded" class="xdi2.server.embedded.EndpointServerEmbedded">
+	<bean id="EndpointServerEmbedded" class="xdi2.transport.impl.http.embedded.EndpointServerEmbedded">
 
 		<property name="endpointServlet" ref="EndpointServlet" />
 
 		<property name="connectors">
 			<util:list>
 				<bean id="Connector" class="org.eclipse.jetty.server.nio.SelectChannelConnector">
-					<property name="port" value="8080" />
+					<property name="port" value="8081" />
 				</bean>
 			</util:list>
 		</property>
@@ -39,6 +39,6 @@
 
 	</bean>
 
-	<bean id="EndpointServlet" class="xdi2.server.servlet.EndpointServlet" init-method="init" destroy-method="destroy" />
+	<bean id="EndpointServlet" class="xdi2.transport.impl.http.impl.servlet.EndpointServlet" init-method="init" destroy-method="destroy" />
 
 </beans>

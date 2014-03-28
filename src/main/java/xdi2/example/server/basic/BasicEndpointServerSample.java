@@ -1,4 +1,4 @@
-package xdi2.example.server;
+package xdi2.example.server.basic;
 
 import xdi2.core.Graph;
 import xdi2.core.impl.memory.MemoryGraphFactory;
@@ -9,7 +9,7 @@ import xdi2.transport.impl.http.embedded.EndpointServerEmbedded;
 
 public class BasicEndpointServerSample {
 
-	public static void main(String[] args) throws Throwable {
+	public static void main(String[] args) throws Exception {
 
 		// create the XDI2 server
 

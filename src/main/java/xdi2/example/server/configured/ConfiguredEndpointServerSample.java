@@ -1,4 +1,4 @@
-package xdi2.example.server;
+package xdi2.example.server.configured;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -7,7 +7,7 @@ import xdi2.transport.impl.http.embedded.EndpointServerEmbedded;
 
 public class ConfiguredEndpointServerSample {
 
-	public static void main(String[] args) throws Throwable {
+	public static void main(String[] args) throws Exception {
 
 		// read configuration files
 
