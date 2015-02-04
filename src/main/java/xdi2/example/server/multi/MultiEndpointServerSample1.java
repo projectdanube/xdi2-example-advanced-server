@@ -20,7 +20,7 @@ public class MultiEndpointServerSample1 {
 
 		// mount messaging target
 
-		endpointServer.getEndpointServlet().getHttpMessagingTargetRegistry().mountMessagingTarget("/", messagingTarget);
+		endpointServer.getEndpointServlet().getHttpTransport().getHttpMessagingTargetRegistry().mountMessagingTarget("/", messagingTarget);
 	}
 
 	public static void main(String[] args) throws Exception {
