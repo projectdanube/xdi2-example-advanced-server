@@ -29,7 +29,7 @@ public class ContributorEndpointServerSample {
 		GraphMessagingTarget graphMessagingTarget = (GraphMessagingTarget) registry.getMessagingTarget("/");
 
 		graphMessagingTarget.getContributors().addContributor(
-				XDIAddress.create("{}[<#inbox>]"),
+				XDIAddress.create("{}<#fast>[<#inbox>]"),
 				new FastCollectionContributor("./xdiinbox"));
 
 		// start the server
