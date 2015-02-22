@@ -59,10 +59,10 @@ public class BookDao implements Serializable {
 
 		log.info("get " + id);
 
-		PreparedStatement statement = connection.prepareStatement("select from books where id=?");
+		PreparedStatement statement = connection.prepareStatement("select * from books where id=?");
 		statement.setLong(1, id);
 		ResultSet resultSet = statement.executeQuery();
-		if (resultSet.isLast()) return null;
+		if (! resultSet.next()) return null;
 
 		return create(resultSet);
 	}

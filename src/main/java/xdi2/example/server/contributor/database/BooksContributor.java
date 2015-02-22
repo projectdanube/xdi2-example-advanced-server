@@ -1,7 +1,6 @@
 package xdi2.example.server.contributor.database;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 import xdi2.core.ContextNode;
@@ -94,12 +93,8 @@ public class BooksContributor extends AbstractContributor {
 		@Override
 		public ContributorResult executeGetOnAddress(XDIAddress[] contributorAddresses, XDIAddress contributorsAddress, XDIAddress relativeTargetAddress, GetOperation operation, MessageResult messageResult, ExecutionContext executionContext) throws Xdi2MessagingException {
 
-			System.err.println(Arrays.asList(contributorAddresses));
-			System.err.println(contributorsAddress);
-			System.err.println(relativeTargetAddress);
-
 			if (contributorsAddress.equals(XDIAddress.create("[#book]{@0}"))) return ContributorResult.DEFAULT;
-			
+
 			// which ID
 
 			long id = Integer.parseInt(contributorAddresses[1].toString().substring(1));
@@ -116,9 +111,12 @@ public class BooksContributor extends AbstractContributor {
 				throw new Xdi2MessagingException("Database error: " + ex.getMessage(), ex, executionContext);
 			}
 
-			ContextNode contextNode = messageResult.getGraph().setDeepContextNode(contributorsAddress);
+			if (book != null) {
 
-			bookToXDI(book, XdiEntityMemberOrdered.fromContextNode(contextNode));
+				ContextNode contextNode = messageResult.getGraph().setDeepContextNode(contributorsAddress);
+
+				bookToXDI(book, XdiEntityMemberOrdered.fromContextNode(contextNode));
+			}
 
 			// done
 

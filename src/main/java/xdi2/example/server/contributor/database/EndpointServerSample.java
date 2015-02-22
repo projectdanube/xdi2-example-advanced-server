@@ -22,7 +22,7 @@ public class EndpointServerSample {
 
 		EndpointServerEmbedded endpointServer = EndpointServerEmbedded.newServer(applicationContextResource, jettyApplicationContextResource);
 
-		// add a custom contributor
+		// add a custom contributor (this can also be done in the applicationContext.xml config file)
 
 		HttpTransport http = endpointServer.getEndpointServlet().getHttpTransport();
 		HttpMessagingTargetRegistry registry = http.getHttpMessagingTargetRegistry();
