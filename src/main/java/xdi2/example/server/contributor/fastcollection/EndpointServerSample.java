@@ -1,22 +1,23 @@
-package xdi2.example.server.contributor;
+package xdi2.example.server.contributor.fastcollection;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
 import xdi2.core.syntax.XDIAddress;
+import xdi2.messaging.target.contributor.Contributor;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
 import xdi2.transport.impl.http.HttpTransport;
 import xdi2.transport.impl.http.embedded.EndpointServerEmbedded;
 import xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry;
 
-public class ContributorEndpointServerSample {
+public class EndpointServerSample {
 
 	public static void main(String[] args) throws Exception {
 
 		// read configuration files
 
-		Resource applicationContextResource = new UrlResource(ContributorEndpointServerSample.class.getResource("applicationContext.xml"));
-		Resource jettyApplicationContextResource = new UrlResource(ContributorEndpointServerSample.class.getResource("jetty-applicationContext.xml"));
+		Resource applicationContextResource = new UrlResource(EndpointServerSample.class.getResource("applicationContext.xml"));
+		Resource jettyApplicationContextResource = new UrlResource(EndpointServerSample.class.getResource("jetty-applicationContext.xml"));
 
 		// create the XDI2 server
 
@@ -28,9 +29,11 @@ public class ContributorEndpointServerSample {
 		HttpMessagingTargetRegistry registry = http.getHttpMessagingTargetRegistry();
 		GraphMessagingTarget graphMessagingTarget = (GraphMessagingTarget) registry.getMessagingTarget("/");
 
+		Contributor contributor = new FastCollectionContributor("./xdiinbox");
+		contributor.init(graphMessagingTarget);
 		graphMessagingTarget.getContributors().addContributor(
 				XDIAddress.create("{}<#fast>[<#inbox>]"),
-				new FastCollectionContributor("./xdiinbox"));
+				contributor);
 
 		// start the server
 

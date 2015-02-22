@@ -5,7 +5,7 @@
 	<groupId>xdi2</groupId>
 	<artifactId>xdi2-example-server</artifactId>
 	<packaging>jar</packaging>
-	<version>0.4-SNAPSHOT</version>
+	<version>0.7-SNAPSHOT</version>
 	<name>xdi2-example-server</name>
 
 	<issueManagement>
@@ -149,6 +149,12 @@
 			<groupId>xdi2</groupId>
 			<artifactId>xdi2-mongodb</artifactId>
 			<version>0.7-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.34</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
