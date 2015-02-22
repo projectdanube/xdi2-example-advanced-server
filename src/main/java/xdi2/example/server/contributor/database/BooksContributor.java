@@ -136,7 +136,7 @@ public class BooksContributor extends AbstractContributor {
 		xdiEntity.getXdiAttribute(XDIArc.create("<#author>"), true).getXdiValue(true).setLiteralString(book.getAuthor());
 		xdiEntity.getXdiAttribute(XDIArc.create("<#publisher>"), true).getXdiValue(true).setLiteralString(book.getPublisher());
 		xdiEntity.getXdiAttribute(XDIArc.create("<#country>"), true).getXdiValue(true).setLiteralString(book.getCountry());
-		xdiEntity.getXdiAttribute(XDIArc.create("<#year>"), true).getXdiValue(true).setLiteralNumber(Double.valueOf((double) book.getYear()));
-		xdiEntity.getXdiAttribute(XDIArc.create("<#price>"), true).getXdiValue(true).setLiteralNumber(Double.valueOf((double) book.getPrice()));
+		xdiEntity.getXdiAttribute(XDIArc.create("<#year>"), true).getXdiValue(true).setLiteralNumber(Double.valueOf(book.getYear()));
+		xdiEntity.getXdiAttribute(XDIArc.create("<#price>"), true).getXdiValue(true).setLiteralNumber(Double.valueOf(book.getPrice()));
 	}
 }
