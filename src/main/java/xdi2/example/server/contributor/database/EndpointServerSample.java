@@ -28,7 +28,7 @@ public class EndpointServerSample {
 		HttpMessagingTargetRegistry registry = http.getHttpMessagingTargetRegistry();
 		GraphMessagingTarget graphMessagingTarget = (GraphMessagingTarget) registry.getMessagingTarget("/");
 
-		Contributor contributor = new BooksContributor();
+		Contributor contributor = new BooksConnector();
 		contributor.init(graphMessagingTarget);
 		graphMessagingTarget.getContributors().addContributor(contributor);
 
