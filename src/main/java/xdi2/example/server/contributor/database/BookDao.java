@@ -57,9 +57,10 @@ public class BookDao implements Serializable {
 
 	public static BookDao get(long id) throws SQLException {
 
-		log.info("get " + id);
+		String sql = "select * from books where id=?";
+		log.info(sql);
 
-		PreparedStatement statement = connection.prepareStatement("select * from books where id=?");
+		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setLong(1, id);
 		ResultSet resultSet = statement.executeQuery();
 		if (! resultSet.next()) return null;
@@ -67,12 +68,25 @@ public class BookDao implements Serializable {
 		return create(resultSet);
 	}
 
+	public static boolean set(long id, String attribute, Object value) throws SQLException {
+
+		String sql = "update books set " + attribute + "=? where id=?";						  // WARNING this is vulnerable to SQL injection
+		log.info(sql);
+
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setObject(1, value);
+		statement.setLong(2, id);
+
+		return statement.execute();
+	}
+
 	public static List<BookDao> list() throws SQLException {
 
-		log.info("list");
+		String sql = "select * from books";
+		log.info(sql);
 
 		Statement statement = connection.createStatement();
-		ResultSet resultSet = statement.executeQuery("select * from books");
+		ResultSet resultSet = statement.executeQuery(sql);
 
 		List<BookDao> list = new ArrayList<BookDao> ();
 		while (resultSet.next()) list.add(create(resultSet));
@@ -82,9 +96,10 @@ public class BookDao implements Serializable {
 
 	public static void save(BookDao book) throws SQLException {
 
-		log.info("save " + book.getId());
+		String sql = "update books set title=?,author=?,publisher=?,country=?,year=?,price=? where id=?";
+		log.info(sql);
 
-		PreparedStatement statement = connection.prepareStatement("update books set title=?,author=?,publisher=?,country=?,year=?,price=? where id=?");
+		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setString(1, book.getTitle());
 		statement.setString(2, book.getAuthor());
 		statement.setString(3, book.getPublisher());
