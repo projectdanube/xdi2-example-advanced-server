@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xdi2.core.exceptions.Xdi2RuntimeException;
-import xdi2.core.impl.AbstractLiteral;
+import xdi2.core.impl.AbstractLiteralNode;
 import xdi2.core.syntax.XDIAddress;
 import xdi2.core.syntax.XDIStatement;
 import xdi2.core.util.XDIAddressUtil;
@@ -78,7 +78,7 @@ public class FastCollectionContributor extends AbstractContributor {
 
 				BufferedReader reader = new BufferedReader(new FileReader(file));
 				String line = reader.readLine();
-				literalData = AbstractLiteral.stringToLiteralData(line);
+				literalData = AbstractLiteralNode.stringToLiteralData(line);
 				reader.close();
 			} catch (IOException ex) {
 
@@ -90,9 +90,7 @@ public class FastCollectionContributor extends AbstractContributor {
 
 			if (literalData != null) {
 
-				messageResult.getGraph().setDeepLiteral(
-						address(file.getName()), 
-						literalData);
+				messageResult.getGraph().setDeepContextNode(address(file.getName())).setLiteralNode(literalData);
 			}
 		}
 
@@ -111,7 +109,7 @@ public class FastCollectionContributor extends AbstractContributor {
 		try {
 
 			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(this.path, filename)));
-			writer.write(AbstractLiteral.literalDataToString(relativeTargetStatement.getLiteralData()));
+			writer.write(AbstractLiteralNode.literalDataToString(relativeTargetStatement.getLiteralData()));
 			writer.close();
 		} catch (IOException ex) {
 

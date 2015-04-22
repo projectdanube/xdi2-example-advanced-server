@@ -179,11 +179,11 @@ public class BooksConnector extends AbstractContributor {
 
 	private static void bookToXDI(BookDao book, XdiEntity xdiEntity) {
 
-		xdiEntity.getXdiAttribute(XDIArc.create("<#title>"), true).getXdiValue(true).setLiteralString(book.getTitle());
-		xdiEntity.getXdiAttribute(XDIArc.create("<#author>"), true).getXdiValue(true).setLiteralString(book.getAuthor());
-		xdiEntity.getXdiAttribute(XDIArc.create("<#publisher>"), true).getXdiValue(true).setLiteralString(book.getPublisher());
-		xdiEntity.getXdiAttribute(XDIArc.create("<#country>"), true).getXdiValue(true).setLiteralString(book.getCountry());
-		xdiEntity.getXdiAttribute(XDIArc.create("<#year>"), true).getXdiValue(true).setLiteralNumber(Double.valueOf(book.getYear()));
-		xdiEntity.getXdiAttribute(XDIArc.create("<#price>"), true).getXdiValue(true).setLiteralNumber(Double.valueOf(book.getPrice()));
+		xdiEntity.getXdiAttribute(XDIArc.create("<#title>"), true).setLiteralString(book.getTitle());
+		xdiEntity.getXdiAttribute(XDIArc.create("<#author>"), true).setLiteralString(book.getAuthor());
+		xdiEntity.getXdiAttribute(XDIArc.create("<#publisher>"), true).setLiteralString(book.getPublisher());
+		xdiEntity.getXdiAttribute(XDIArc.create("<#country>"), true).setLiteralString(book.getCountry());
+		xdiEntity.getXdiAttribute(XDIArc.create("<#year>"), true).setLiteralNumber(Double.valueOf(book.getYear()));
+		xdiEntity.getXdiAttribute(XDIArc.create("<#price>"), true).setLiteralNumber(Double.valueOf(book.getPrice()));
 	}
 }
