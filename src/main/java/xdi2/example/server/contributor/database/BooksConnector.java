@@ -5,7 +5,7 @@ import java.util.List;
 
 import xdi2.core.ContextNode;
 import xdi2.core.features.nodetypes.XdiEntity;
-import xdi2.core.features.nodetypes.XdiEntityMemberOrdered;
+import xdi2.core.features.nodetypes.XdiEntityInstanceOrdered;
 import xdi2.core.syntax.XDIAddress;
 import xdi2.core.syntax.XDIArc;
 import xdi2.core.syntax.XDIStatement;
@@ -75,7 +75,7 @@ public class BooksConnector extends AbstractContributor {
 
 			ContextNode contextNode = messageResult.getGraph().setDeepContextNode(XDIaddress);
 
-			bookToXDI(book, XdiEntityMemberOrdered.fromContextNode(contextNode));
+			bookToXDI(book, XdiEntityInstanceOrdered.fromContextNode(contextNode));
 		}
 
 		// done
@@ -124,7 +124,7 @@ public class BooksConnector extends AbstractContributor {
 
 				ContextNode contextNode = messageResult.getGraph().setDeepContextNode(contributorsAddress);
 
-				bookToXDI(book, XdiEntityMemberOrdered.fromContextNode(contextNode));
+				bookToXDI(book, XdiEntityInstanceOrdered.fromContextNode(contextNode));
 			}
 
 			// done
