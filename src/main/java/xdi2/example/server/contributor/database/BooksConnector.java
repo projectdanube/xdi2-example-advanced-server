@@ -21,7 +21,7 @@ import xdi2.messaging.target.contributor.ContributorMount;
 import xdi2.messaging.target.contributor.ContributorResult;
 
 @ContributorMount(
-		contributorXDIAddresses={"[=]{!:uuid:0000}[#book]"}
+		contributorXDIAddresses={"=user[#book]"}
 		)
 public class BooksConnector extends AbstractContributor {
 

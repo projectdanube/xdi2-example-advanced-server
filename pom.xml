@@ -5,7 +5,7 @@
 	<groupId>xdi2</groupId>
 	<artifactId>xdi2-example-server</artifactId>
 	<packaging>jar</packaging>
-	<version>0.7-SNAPSHOT</version>
+	<version>0.8-SNAPSHOT</version>
 	<name>xdi2-example-server</name>
 
 	<issueManagement>
@@ -142,13 +142,13 @@
 		<dependency>
 			<groupId>xdi2</groupId>
 			<artifactId>xdi2-transport-http-embedded</artifactId>
-			<version>0.7-SNAPSHOT</version>
+			<version>0.8-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>xdi2</groupId>
 			<artifactId>xdi2-mongodb</artifactId>
-			<version>0.7-SNAPSHOT</version>
+			<version>0.8-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

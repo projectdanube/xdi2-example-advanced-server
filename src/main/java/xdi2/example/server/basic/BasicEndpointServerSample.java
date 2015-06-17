@@ -30,7 +30,7 @@ public class BasicEndpointServerSample {
 		// add interceptors
 
 		BootstrapInterceptor bi = new BootstrapInterceptor();
-		bi.setBootstrapOwner(XDIAddress.create("[=]!:uuid:1111"));
+		bi.setBootstrapOwner(XDIAddress.create("=!:uuid:1111"));
 		bi.setBootstrapRootLinkContract(true);
 
 		AuthenticationSecretTokenInterceptor asti = new AuthenticationSecretTokenInterceptor();
@@ -38,7 +38,7 @@ public class BasicEndpointServerSample {
 				new StaticSecretTokenAuthenticator(
 						"00000000-0000-0000-0000-000000000000", 
 						Collections.singletonMap(
-								XDIAddress.create("[=]!:uuid:1111"), 
+								XDIAddress.create("=!:uuid:1111"), 
 								SecretTokens.localSaltAndDigestSecretToken(
 										"s3cr3t",
 										"00000000-0000-0000-0000-000000000000"))));
