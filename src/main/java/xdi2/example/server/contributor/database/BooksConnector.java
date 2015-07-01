@@ -4,21 +4,21 @@ import java.sql.SQLException;
 import java.util.List;
 
 import xdi2.core.ContextNode;
+import xdi2.core.Graph;
 import xdi2.core.features.nodetypes.XdiEntity;
 import xdi2.core.features.nodetypes.XdiEntityInstanceOrdered;
 import xdi2.core.syntax.XDIAddress;
 import xdi2.core.syntax.XDIArc;
 import xdi2.core.syntax.XDIStatement;
 import xdi2.core.util.XDIAddressUtil;
-import xdi2.messaging.GetOperation;
-import xdi2.messaging.MessageResult;
-import xdi2.messaging.SetOperation;
-import xdi2.messaging.context.ExecutionContext;
-import xdi2.messaging.exceptions.Xdi2MessagingException;
+import xdi2.messaging.operations.GetOperation;
+import xdi2.messaging.operations.SetOperation;
 import xdi2.messaging.target.MessagingTarget;
 import xdi2.messaging.target.contributor.AbstractContributor;
 import xdi2.messaging.target.contributor.ContributorMount;
 import xdi2.messaging.target.contributor.ContributorResult;
+import xdi2.messaging.target.exceptions.Xdi2MessagingException;
+import xdi2.messaging.target.execution.ExecutionContext;
 
 @ContributorMount(
 		contributorXDIAddresses={"=user[#book]"}
@@ -53,7 +53,7 @@ public class BooksConnector extends AbstractContributor {
 	}
 
 	@Override
-	public ContributorResult executeGetOnAddress(XDIAddress[] contributorAddresses, XDIAddress contributorsAddress, XDIAddress relativeTargetAddress, GetOperation operation, MessageResult messageResult, ExecutionContext executionContext) throws Xdi2MessagingException {
+	public ContributorResult executeGetOnAddress(XDIAddress[] contributorAddresses, XDIAddress contributorsAddress, XDIAddress relativeTargetAddress, GetOperation operation, Graph operationResultGraph, ExecutionContext executionContext) throws Xdi2MessagingException {
 
 		// list books
 
@@ -73,7 +73,7 @@ public class BooksConnector extends AbstractContributor {
 					contributorsAddress, 
 					XDIAddress.create("@" + book.getId()));
 
-			ContextNode contextNode = messageResult.getGraph().setDeepContextNode(XDIaddress);
+			ContextNode contextNode = operationResultGraph.setDeepContextNode(XDIaddress);
 
 			bookToXDI(book, XdiEntityInstanceOrdered.fromContextNode(contextNode));
 		}
@@ -100,7 +100,7 @@ public class BooksConnector extends AbstractContributor {
 		}
 		
 		@Override
-		public ContributorResult executeGetOnAddress(XDIAddress[] contributorAddresses, XDIAddress contributorsAddress, XDIAddress relativeTargetAddress, GetOperation operation, MessageResult messageResult, ExecutionContext executionContext) throws Xdi2MessagingException {
+		public ContributorResult executeGetOnAddress(XDIAddress[] contributorAddresses, XDIAddress contributorsAddress, XDIAddress relativeTargetAddress, GetOperation operation, Graph operationResultGraph, ExecutionContext executionContext) throws Xdi2MessagingException {
 
 			if (contributorAddresses[1].equals(XDIAddress.create("{@0}"))) return ContributorResult.DEFAULT;
 
@@ -122,7 +122,7 @@ public class BooksConnector extends AbstractContributor {
 
 			if (book != null) {
 
-				ContextNode contextNode = messageResult.getGraph().setDeepContextNode(contributorsAddress);
+				ContextNode contextNode = operationResultGraph.setDeepContextNode(contributorsAddress);
 
 				bookToXDI(book, XdiEntityInstanceOrdered.fromContextNode(contextNode));
 			}
@@ -142,7 +142,7 @@ public class BooksConnector extends AbstractContributor {
 		public class BookAttributeContributor extends AbstractContributor {
 
 			@Override
-			public ContributorResult executeSetOnLiteralStatement(XDIAddress[] contributorAddresses, XDIAddress contributorsAddress, XDIStatement relativeTargetStatement, SetOperation operation, MessageResult messageResult, ExecutionContext executionContext) throws Xdi2MessagingException {
+			public ContributorResult executeSetOnLiteralStatement(XDIAddress[] contributorAddresses, XDIAddress contributorsAddress, XDIStatement relativeTargetStatement, SetOperation operation, Graph operationResultGraph, ExecutionContext executionContext) throws Xdi2MessagingException {
 
 				if (contributorAddresses[1].equals(XDIAddress.create("{@0}"))) return ContributorResult.DEFAULT;
 				if (contributorAddresses[2].equals(XDIAddress.create("<#>"))) return ContributorResult.DEFAULT;

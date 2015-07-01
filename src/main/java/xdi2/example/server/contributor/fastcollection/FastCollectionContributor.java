@@ -14,19 +14,19 @@ import java.net.URLEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import xdi2.core.Graph;
 import xdi2.core.exceptions.Xdi2RuntimeException;
 import xdi2.core.impl.AbstractLiteralNode;
 import xdi2.core.syntax.XDIAddress;
 import xdi2.core.syntax.XDIStatement;
 import xdi2.core.util.XDIAddressUtil;
-import xdi2.messaging.GetOperation;
-import xdi2.messaging.MessageResult;
-import xdi2.messaging.SetOperation;
-import xdi2.messaging.context.ExecutionContext;
-import xdi2.messaging.exceptions.Xdi2MessagingException;
+import xdi2.messaging.operations.GetOperation;
+import xdi2.messaging.operations.SetOperation;
 import xdi2.messaging.target.MessagingTarget;
 import xdi2.messaging.target.contributor.AbstractContributor;
 import xdi2.messaging.target.contributor.ContributorResult;
+import xdi2.messaging.target.exceptions.Xdi2MessagingException;
+import xdi2.messaging.target.execution.ExecutionContext;
 
 public class FastCollectionContributor extends AbstractContributor {
 
@@ -53,7 +53,7 @@ public class FastCollectionContributor extends AbstractContributor {
 	}
 
 	@Override
-	public ContributorResult executeGetOnAddress(XDIAddress[] contributorAddresses, XDIAddress contributorsAddress, XDIAddress relativeTargetAddress, GetOperation operation, MessageResult messageResult, ExecutionContext executionContext) throws Xdi2MessagingException {
+	public ContributorResult executeGetOnAddress(XDIAddress[] contributorAddresses, XDIAddress contributorsAddress, XDIAddress relativeTargetAddress, GetOperation operation, Graph operationResultGraph, ExecutionContext executionContext) throws Xdi2MessagingException {
 
 		Object literalData;
 
@@ -90,7 +90,7 @@ public class FastCollectionContributor extends AbstractContributor {
 
 			if (literalData != null) {
 
-				messageResult.getGraph().setDeepContextNode(address(file.getName())).setLiteralNode(literalData);
+				operationResultGraph.setDeepContextNode(address(file.getName())).setLiteralNode(literalData);
 			}
 		}
 
@@ -100,7 +100,7 @@ public class FastCollectionContributor extends AbstractContributor {
 	}
 
 	@Override
-	public ContributorResult executeSetOnLiteralStatement(XDIAddress[] contributorAddresses, XDIAddress contributorsAddress, XDIStatement relativeTargetStatement, SetOperation operation, MessageResult messageResult, ExecutionContext executionContext) throws Xdi2MessagingException {
+	public ContributorResult executeSetOnLiteralStatement(XDIAddress[] contributorAddresses, XDIAddress contributorsAddress, XDIStatement relativeTargetStatement, SetOperation operation, Graph operationResultGraph, ExecutionContext executionContext) throws Xdi2MessagingException {
 
 		String filename = filename(XDIAddressUtil.concatXDIAddresses(contributorsAddress, relativeTargetStatement.getSubject()));
 
