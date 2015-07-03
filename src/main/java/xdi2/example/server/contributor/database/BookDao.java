@@ -55,6 +55,7 @@ public class BookDao implements Serializable {
 		return book;
 	}
 
+	@SuppressWarnings("resource")
 	public static BookDao get(long id) throws SQLException {
 
 		String sql = "select * from books where id=?";
@@ -68,6 +69,7 @@ public class BookDao implements Serializable {
 		return create(resultSet);
 	}
 
+	@SuppressWarnings("resource")
 	public static boolean set(long id, String attribute, Object value) throws SQLException {
 
 		String sql = "update books set " + attribute + "=? where id=?";						  // WARNING this is vulnerable to SQL injection
@@ -80,6 +82,7 @@ public class BookDao implements Serializable {
 		return statement.execute();
 	}
 
+	@SuppressWarnings("resource")
 	public static List<BookDao> list() throws SQLException {
 
 		String sql = "select * from books";
@@ -94,6 +97,7 @@ public class BookDao implements Serializable {
 		return list;
 	}
 
+	@SuppressWarnings("resource")
 	public static void save(BookDao book) throws SQLException {
 
 		String sql = "update books set title=?,author=?,publisher=?,country=?,year=?,price=? where id=?";
