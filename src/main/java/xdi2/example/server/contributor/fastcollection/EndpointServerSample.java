@@ -8,7 +8,7 @@ import xdi2.messaging.target.contributor.Contributor;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
 import xdi2.transport.impl.http.HttpTransport;
 import xdi2.transport.impl.http.embedded.EndpointServerEmbedded;
-import xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry;
+import xdi2.transport.registry.impl.uri.UriMessagingTargetRegistry;
 
 public class EndpointServerSample {
 
@@ -26,7 +26,7 @@ public class EndpointServerSample {
 		// add a custom contributor (this can also be done in the applicationContext.xml config file)
 
 		HttpTransport http = endpointServer.getEndpointServlet().getHttpTransport();
-		HttpMessagingTargetRegistry registry = http.getHttpMessagingTargetRegistry();
+		UriMessagingTargetRegistry registry = http.getUriMessagingTargetRegistry();
 		GraphMessagingTarget graphMessagingTarget = (GraphMessagingTarget) registry.getMessagingTarget("/");
 
 		Contributor contributor = new FastCollectionContributor("./xdiinbox");
