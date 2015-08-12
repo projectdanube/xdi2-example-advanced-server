@@ -17,11 +17,11 @@ public class EndpointServerSample {
 		// read configuration files
 
 		Resource applicationContextResource = new UrlResource(EndpointServerSample.class.getResource("applicationContext.xml"));
-		Resource jettyApplicationContextResource = new UrlResource(EndpointServerSample.class.getResource("server-applicationContext.xml"));
+		Resource serverApplicationContextResource = new UrlResource(EndpointServerSample.class.getResource("server-applicationContext.xml"));
 
 		// create the XDI2 server
 
-		XDIEmbeddedServer endpointServer = XDIEmbeddedServer.newServer(applicationContextResource, jettyApplicationContextResource);
+		XDIEmbeddedServer endpointServer = XDIEmbeddedServer.newServer(applicationContextResource, serverApplicationContextResource);
 
 		// add a custom contributor (this can also be done in the applicationContext.xml config file)
 

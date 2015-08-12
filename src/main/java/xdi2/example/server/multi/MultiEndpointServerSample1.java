@@ -27,15 +27,15 @@ public class MultiEndpointServerSample1 {
 
 		// read configuration files
 		
-		Resource jettyApplicationContextResource1 = new UrlResource(MultiEndpointServerSample1.class.getResource("server-applicationContext1.xml"));
-		Resource jettyApplicationContextResource2 = new UrlResource(MultiEndpointServerSample1.class.getResource("server-applicationContext2.xml"));
-		Resource jettyApplicationContextResource3 = new UrlResource(MultiEndpointServerSample1.class.getResource("server-applicationContext3.xml"));
+		Resource serverApplicationContextResource1 = new UrlResource(MultiEndpointServerSample1.class.getResource("server-applicationContext1.xml"));
+		Resource serverApplicationContextResource2 = new UrlResource(MultiEndpointServerSample1.class.getResource("server-applicationContext2.xml"));
+		Resource serverApplicationContextResource3 = new UrlResource(MultiEndpointServerSample1.class.getResource("server-applicationContext3.xml"));
 
 		// create the XDI2 servers
 
-		XDIEmbeddedServer endpointServer1 = XDIEmbeddedServer.newServer(null, jettyApplicationContextResource1);
-		XDIEmbeddedServer endpointServer2 = XDIEmbeddedServer.newServer(null, jettyApplicationContextResource2);
-		XDIEmbeddedServer endpointServer3 = XDIEmbeddedServer.newServer(null, jettyApplicationContextResource3);
+		XDIEmbeddedServer endpointServer1 = XDIEmbeddedServer.newServer(null, serverApplicationContextResource1);
+		XDIEmbeddedServer endpointServer2 = XDIEmbeddedServer.newServer(null, serverApplicationContextResource2);
+		XDIEmbeddedServer endpointServer3 = XDIEmbeddedServer.newServer(null, serverApplicationContextResource3);
 
 		// set up and mount graph messaging target
 
