@@ -11,7 +11,7 @@ import xdi2.messaging.target.interceptor.impl.BootstrapInterceptor;
 import xdi2.messaging.target.interceptor.impl.authentication.secrettoken.AuthenticationSecretTokenInterceptor;
 import xdi2.messaging.target.interceptor.impl.authentication.secrettoken.StaticSecretTokenAuthenticator;
 import xdi2.messaging.target.interceptor.impl.linkcontract.LinkContractInterceptor;
-import xdi2.transport.impl.http.embedded.EndpointServerEmbedded;
+import xdi2.server.impl.embedded.XDIEmbeddedServer;
 
 public class BasicEndpointServerSample {
 
@@ -19,7 +19,7 @@ public class BasicEndpointServerSample {
 
 		// create the XDI2 server
 
-		EndpointServerEmbedded endpointServer = EndpointServerEmbedded.newServer();
+		XDIEmbeddedServer endpointServer = XDIEmbeddedServer.newServer();
 
 		// set up graph messaging target
 

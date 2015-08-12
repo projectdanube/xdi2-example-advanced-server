@@ -3,7 +3,7 @@ package xdi2.example.server.multi;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
-import xdi2.transport.impl.http.embedded.EndpointServerEmbedded;
+import xdi2.server.impl.embedded.XDIEmbeddedServer;
 
 public class MultiEndpointServerSample2 {
 
@@ -11,17 +11,17 @@ public class MultiEndpointServerSample2 {
 
 		// read configuration files
 		
-		Resource jettyApplicationContextResource1 = new UrlResource(MultiEndpointServerSample2.class.getResource("jetty-applicationContext1.xml"));
-		Resource jettyApplicationContextResource2 = new UrlResource(MultiEndpointServerSample2.class.getResource("jetty-applicationContext2.xml"));
-		Resource jettyApplicationContextResource3 = new UrlResource(MultiEndpointServerSample2.class.getResource("jetty-applicationContext3.xml"));
+		Resource jettyApplicationContextResource1 = new UrlResource(MultiEndpointServerSample2.class.getResource("server-applicationContext1.xml"));
+		Resource jettyApplicationContextResource2 = new UrlResource(MultiEndpointServerSample2.class.getResource("server-applicationContext2.xml"));
+		Resource jettyApplicationContextResource3 = new UrlResource(MultiEndpointServerSample2.class.getResource("server-applicationContext3.xml"));
 
 		Resource applicationContextResource = new UrlResource(MultiEndpointServerSample2.class.getResource("applicationContext.xml"));
 
 		// create the XDI2 servers
 
-		EndpointServerEmbedded endpointServer1 = EndpointServerEmbedded.newServer(applicationContextResource, jettyApplicationContextResource1);
-		EndpointServerEmbedded endpointServer2 = EndpointServerEmbedded.newServer(applicationContextResource, jettyApplicationContextResource2);
-		EndpointServerEmbedded endpointServer3 = EndpointServerEmbedded.newServer(applicationContextResource, jettyApplicationContextResource3);
+		XDIEmbeddedServer endpointServer1 = XDIEmbeddedServer.newServer(applicationContextResource, jettyApplicationContextResource1);
+		XDIEmbeddedServer endpointServer2 = XDIEmbeddedServer.newServer(applicationContextResource, jettyApplicationContextResource2);
+		XDIEmbeddedServer endpointServer3 = XDIEmbeddedServer.newServer(applicationContextResource, jettyApplicationContextResource3);
 
 		// start the server
 
