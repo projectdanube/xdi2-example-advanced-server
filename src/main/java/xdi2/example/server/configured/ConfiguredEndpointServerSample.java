@@ -3,7 +3,7 @@ package xdi2.example.server.configured;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
-import xdi2.server.impl.embedded.XDIEmbeddedServer;
+import xdi2.server.impl.standalone.XDIStandaloneServer;
 
 public class ConfiguredEndpointServerSample {
 
@@ -16,10 +16,10 @@ public class ConfiguredEndpointServerSample {
 
 		// create the XDI2 server
 
-		XDIEmbeddedServer endpointServer = XDIEmbeddedServer.newServer(applicationContextResource, serverApplicationContextResource);
+		XDIStandaloneServer endpointServer = XDIStandaloneServer.newServer(applicationContextResource, serverApplicationContextResource);
 
 		// start the server
 
-		endpointServer.start();
+		endpointServer.startServer();
 	}
 }

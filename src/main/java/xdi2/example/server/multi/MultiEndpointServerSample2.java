@@ -3,7 +3,7 @@ package xdi2.example.server.multi;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
-import xdi2.server.impl.embedded.XDIEmbeddedServer;
+import xdi2.server.impl.standalone.XDIStandaloneServer;
 
 public class MultiEndpointServerSample2 {
 
@@ -19,14 +19,14 @@ public class MultiEndpointServerSample2 {
 
 		// create the XDI2 servers
 
-		XDIEmbeddedServer endpointServer1 = XDIEmbeddedServer.newServer(applicationContextResource, serverApplicationContextResource1);
-		XDIEmbeddedServer endpointServer2 = XDIEmbeddedServer.newServer(applicationContextResource, serverApplicationContextResource2);
-		XDIEmbeddedServer endpointServer3 = XDIEmbeddedServer.newServer(applicationContextResource, serverApplicationContextResource3);
+		XDIStandaloneServer endpointServer1 = XDIStandaloneServer.newServer(applicationContextResource, serverApplicationContextResource1);
+		XDIStandaloneServer endpointServer2 = XDIStandaloneServer.newServer(applicationContextResource, serverApplicationContextResource2);
+		XDIStandaloneServer endpointServer3 = XDIStandaloneServer.newServer(applicationContextResource, serverApplicationContextResource3);
 
 		// start the server
 
-		endpointServer1.start();
-		endpointServer2.start();
-		endpointServer3.start();
+		endpointServer1.startServer();
+		endpointServer2.startServer();
+		endpointServer3.startServer();
 	}
 }

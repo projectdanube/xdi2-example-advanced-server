@@ -6,11 +6,11 @@ import org.springframework.core.io.UrlResource;
 import xdi2.core.Graph;
 import xdi2.core.impl.json.mongodb.MongoDBJSONGraphFactory;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
-import xdi2.server.impl.embedded.XDIEmbeddedServer;
+import xdi2.server.impl.standalone.XDIStandaloneServer;
 
 public class MultiEndpointServerSample1 {
 
-	private static void setupAndMountGraphMessagingTarget(XDIEmbeddedServer endpointServer) throws Exception {
+	private static void setupAndMountGraphMessagingTarget(XDIStandaloneServer endpointServer) throws Exception {
 
 		// set up graph messaging target
 
@@ -33,9 +33,9 @@ public class MultiEndpointServerSample1 {
 
 		// create the XDI2 servers
 
-		XDIEmbeddedServer endpointServer1 = XDIEmbeddedServer.newServer(null, serverApplicationContextResource1);
-		XDIEmbeddedServer endpointServer2 = XDIEmbeddedServer.newServer(null, serverApplicationContextResource2);
-		XDIEmbeddedServer endpointServer3 = XDIEmbeddedServer.newServer(null, serverApplicationContextResource3);
+		XDIStandaloneServer endpointServer1 = XDIStandaloneServer.newServer(null, serverApplicationContextResource1);
+		XDIStandaloneServer endpointServer2 = XDIStandaloneServer.newServer(null, serverApplicationContextResource2);
+		XDIStandaloneServer endpointServer3 = XDIStandaloneServer.newServer(null, serverApplicationContextResource3);
 
 		// set up and mount graph messaging target
 
@@ -45,8 +45,8 @@ public class MultiEndpointServerSample1 {
 
 		// start the server
 
-		endpointServer1.start();
-		endpointServer2.start();
-		endpointServer3.start();
+		endpointServer1.startServer();
+		endpointServer2.startServer();
+		endpointServer3.startServer();
 	}
 }

@@ -5,7 +5,7 @@ import org.springframework.core.io.UrlResource;
 
 import xdi2.messaging.target.contributor.Contributor;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
-import xdi2.server.impl.embedded.XDIEmbeddedServer;
+import xdi2.server.impl.standalone.XDIStandaloneServer;
 import xdi2.transport.impl.http.HttpTransport;
 import xdi2.transport.registry.impl.uri.UriMessagingTargetRegistry;
 
@@ -20,7 +20,7 @@ public class EndpointServerSample {
 
 		// create the XDI2 server
 
-		XDIEmbeddedServer endpointServer = XDIEmbeddedServer.newServer(applicationContextResource, serverApplicationContextResource);
+		XDIStandaloneServer endpointServer = XDIStandaloneServer.newServer(applicationContextResource, serverApplicationContextResource);
 
 		// add a custom contributor (this can also be done in the applicationContext.xml config file)
 
@@ -34,6 +34,6 @@ public class EndpointServerSample {
 
 		// start the server
 
-		endpointServer.start();
+		endpointServer.startServer();
 	}
 }
