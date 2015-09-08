@@ -1,10 +1,8 @@
-*.class
-
-# Package Files #
-*.jar
-*.war
-*.ear
-/bin
-/target
-/xdi2-bdb
-/xdi2-bdb-keyvalue
+log4j.log
+.classpath
+.project
+/.settings/
+/bin/
+/target/
+/xdi2-bdb/
+/xdi2-bdb-keyvalue/
