@@ -3,20 +3,20 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>xdi2</groupId>
-	<artifactId>xdi2-example-server</artifactId>
+	<artifactId>xdi2-example-advanced-server</artifactId>
 	<packaging>jar</packaging>
 	<version>0.8-SNAPSHOT</version>
-	<name>xdi2-example-server</name>
+	<name>xdi2-example-advanced-server</name>
 
 	<issueManagement>
-		<url>https://github.com/projectdanube/xdi2-example-server/issues</url>
+		<url>https://github.com/projectdanube/xdi2-example-advanced-server/issues</url>
 		<system>GitHub Issues</system>
 	</issueManagement>
 
 	<scm>
-		<url>https://github.com/projectdanube/xdi2-example-server</url>
-		<connection>scm:git:git://github.com/projectdanube/xdi2-example-server.git</connection>
-		<developerConnection>scm:git:git@github.com:projectdanube/xdi2-example-server.git</developerConnection>
+		<url>https://github.com/projectdanube/xdi2-example-advanced-server</url>
+		<connection>scm:git:git://github.com/projectdanube/xdi2-example-advanced-server.git</connection>
+		<developerConnection>scm:git:git@github.com:projectdanube/xdi2-example-advanced-server.git</developerConnection>
 	</scm>
 
 	<properties>
