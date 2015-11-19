@@ -63,7 +63,7 @@
 				</bean>
 				<bean class="xdi2.messaging.target.interceptor.impl.ToInterceptor" />
 				<bean class="xdi2.messaging.target.interceptor.impl.RefInterceptor" />
-				<bean class="xdi2.messaging.target.interceptor.impl.RoutingInterceptor">
+				<bean class="xdi2.messaging.target.interceptor.impl.RedirectInterceptor">
 					<property name="xdiAgent">
 						<bean class="xdi2.agent.impl.XDIBasicAgent">
 							<property name="agentRouters">
