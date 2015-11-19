@@ -3,6 +3,25 @@
 	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 
+	<bean id="XDIStandaloneServer" class="xdi2.server.impl.standalone.XDIStandaloneServer">
+		<property name="endpointServlet" ref="EndpointServlet" />
+		<property name="server" ref="Server" />
+	</bean>
+
+	<bean id="EndpointServlet" class="xdi2.transport.impl.http.impl.servlet.EndpointServlet" init-method="init" destroy-method="destroy" />
+
+	<bean id="Server" class="org.eclipse.jetty.server.Server">
+		<property name="connectors">
+			<util:list>
+				<bean id="Connector" class="org.eclipse.jetty.server.ServerConnector">
+               		<constructor-arg ref="Server"/>
+					<property name="port" value="9881"/>
+				</bean>
+			</util:list>
+		</property>
+		<property name="handler" ref="servletContextHandler" />
+	</bean>
+
 	<bean id="servletHolder" class="org.eclipse.jetty.servlet.ServletHolder">
 		<property name="servlet" ref="EndpointServlet" />
 		<property name="name" value="EndpointServlet" />
@@ -22,23 +41,5 @@
 		<property name="servletHandler" ref="servletHandler" />
 		<property name="contextPath" value="/" />
 	</bean>
-
-	<bean id="EndpointServerEmbedded" class="xdi2.transport.impl.http.embedded.EndpointServerEmbedded">
-
-		<property name="endpointServlet" ref="EndpointServlet" />
-
-		<property name="connectors">
-			<util:list>
-				<bean id="Connector" class="org.eclipse.jetty.server.nio.SelectChannelConnector">
-					<property name="port" value="9881" />
-				</bean>
-			</util:list>
-		</property>
-
-		<property name="handler" ref="servletContextHandler" />
-
-	</bean>
-
-	<bean id="EndpointServlet" class="xdi2.transport.impl.http.impl.servlet.EndpointServlet" init-method="init" destroy-method="destroy" />
 
 </beans>
