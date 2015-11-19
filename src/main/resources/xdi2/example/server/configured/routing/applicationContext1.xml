@@ -39,9 +39,6 @@
 				<bean class="xdi2.agent.routing.impl.local.XDIMessagingTargetRegistryAgentRouter">
 					<property name="messagingTargetRegistry" ref="UriMessagingTargetRegistry" />
 				</bean>
-				<bean class="xdi2.agent.routing.impl.websocket.XDIWebSocketTransportAgentRouter">
-					<property name="webSocketTransport" ref="WebSocketTransport" />
-				</bean>
 				<bean class="xdi2.agent.routing.impl.http.XDIHttpDiscoveryAgentRouter">
 					<property name="xdiDiscoveryClient" ref="XdiDiscoveryClient" />
 				</bean>
@@ -61,9 +58,12 @@
 		<property name="graph" ref="graph1" />
 		<property name="interceptors">
 			<util:list>
+				<bean class="xdi2.messaging.target.interceptor.impl.BootstrapInterceptor">
+					<property name="bootstrapOwner" value="+!:uuid:0000" />
+				</bean>
 				<bean class="xdi2.messaging.target.interceptor.impl.ToInterceptor" />
 				<bean class="xdi2.messaging.target.interceptor.impl.RefInterceptor" />
-				<bean class="xdi2.messaging.target.interceptor.impl.routing.RoutingInterceptor">
+				<bean class="xdi2.messaging.target.interceptor.impl.RoutingInterceptor">
 					<property name="xdiAgent">
 						<bean class="xdi2.agent.impl.XDIBasicAgent">
 							<property name="agentRouters">
