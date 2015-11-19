@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<!-- XDI ENDPOINT REGISTRY AND TRANSPORT -->
+
+	<bean id="UriMessagingTargetRegistry" class="xdi2.transport.registry.impl.uri.UriMessagingTargetRegistry" init-method="init" destroy-method="shutdown" />
+
+	<bean id="HttpTransport" class="xdi2.transport.impl.http.HttpTransport" init-method="init" destroy-method="shutdown">
+		<property name="uriMessagingTargetRegistry" ref="UriMessagingTargetRegistry" />
+		<property name="interceptors">
+			<util:list>
+				<bean class="xdi2.transport.impl.http.interceptor.impl.DebugHttpTransportInterceptor" />
+				<bean class="xdi2.transport.impl.http.interceptor.impl.StatusHttpTransportInterceptor" />
+			</util:list>
+		</property>
+	</bean>
+
+	<!-- SPRING -->
+
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<util:list>
+				<bean class="xdi2.transport.spring.XDI2SpringConverter" />
+			</util:list>
+		</property>
+	</bean>
+
+	<!-- XDI DISCOVERY CLIENT AND AGENT -->
+
+	<bean id="XdiDiscoveryClient" class="xdi2.discovery.XDIDiscoveryClient">
+		<property name="registryXdiClient" value="https://discovery.xdi2.org/neustar-discovery-service-prod/" />
+	</bean>
+
+	<bean id="XdiAgent" class="xdi2.agent.impl.XDIBasicAgent">
+		<property name="agentRouters">
+			<util:list>
+				<bean class="xdi2.agent.routing.impl.local.XDIMessagingTargetRegistryAgentRouter">
+					<property name="messagingTargetRegistry" ref="UriMessagingTargetRegistry" />
+				</bean>
+				<bean class="xdi2.agent.routing.impl.websocket.XDIWebSocketTransportAgentRouter">
+					<property name="webSocketTransport" ref="WebSocketTransport" />
+				</bean>
+				<bean class="xdi2.agent.routing.impl.http.XDIHttpDiscoveryAgentRouter">
+					<property name="xdiDiscoveryClient" ref="XdiDiscoveryClient" />
+				</bean>
+			</util:list>
+		</property>
+	</bean>
+
+	<!-- MESSAGING TARGET at / -->
+	<!-- MessagingTarget: GraphMessagingTarget backed by a MemoryGraph -->
+
+	<bean id="graphfactory1" class="xdi2.core.impl.memory.MemoryGraphFactory">
+	</bean>
+
+	<bean id="graph1" factory-bean="graphfactory1" factory-method="openGraph" />
+
+	<bean name="/graph" class="xdi2.messaging.target.impl.graph.GraphMessagingTarget">
+		<property name="graph" ref="graph1" />
+		<property name="interceptors">
+			<util:list>
+				<bean class="xdi2.messaging.target.interceptor.impl.ToInterceptor" />
+				<bean class="xdi2.messaging.target.interceptor.impl.RefInterceptor" />
+				<bean class="xdi2.messaging.target.interceptor.impl.routing.RoutingInterceptor">
+					<property name="xdiAgent">
+						<bean class="xdi2.agent.impl.XDIBasicAgent">
+							<property name="agentRouters">
+								<util:list>
+									<bean class="xdi2.agent.routing.impl.XDIStaticAgentRouter">
+										<property name="toPeerRootXDIArc" value="(+!:uuid:0000)" />
+										<property name="xdiClientRoute">
+											<bean class="xdi2.client.impl.http.XDIHttpClientRoute">
+												<property name="xdiEndpointUri" value="http://localhost:9882/xdi/graph" />
+											</bean>
+										</property>
+									</bean>
+								</util:list>
+							</property>
+						</bean>
+					</property>
+					<property name="skipSiblingInterceptors" value="false" />
+					<property name="skipMessagingTarget" value="false" />
+				</bean>
+			</util:list>
+		</property>
+	</bean>
+
+</beans>
