@@ -5,22 +5,22 @@ import org.springframework.core.io.UrlResource;
 
 import xdi2.core.Graph;
 import xdi2.core.impl.json.mongodb.MongoDBJSONGraphFactory;
-import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
+import xdi2.messaging.container.impl.graph.GraphMessagingContainer;
 import xdi2.server.impl.standalone.XDIStandaloneServer;
 
 public class MultiEndpointServerSample1 {
 
-	private static void setupAndMountGraphMessagingTarget(XDIStandaloneServer endpointServer) throws Exception {
+	private static void setupAndMountGraphMessagingContainer(XDIStandaloneServer endpointServer) throws Exception {
 
-		// set up graph messaging target
+		// set up graph messaging container
 
 		Graph graph = new MongoDBJSONGraphFactory().openGraph("mygraph");
-		GraphMessagingTarget messagingTarget = new GraphMessagingTarget();
-		messagingTarget.setGraph(graph);
+		GraphMessagingContainer messagingContainer = new GraphMessagingContainer();
+		messagingContainer.setGraph(graph);
 
-		// mount messaging target
+		// mount messaging container
 
-		endpointServer.getEndpointServlet().getHttpTransport().getUriMessagingTargetRegistry().mountMessagingTarget("/", messagingTarget);
+		endpointServer.getEndpointServlet().getHttpTransport().getUriMessagingContainerRegistry().mountMessagingContainer("/", messagingContainer);
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -37,11 +37,11 @@ public class MultiEndpointServerSample1 {
 		XDIStandaloneServer endpointServer2 = XDIStandaloneServer.newServer(null, serverApplicationContextResource2);
 		XDIStandaloneServer endpointServer3 = XDIStandaloneServer.newServer(null, serverApplicationContextResource3);
 
-		// set up and mount graph messaging target
+		// set up and mount graph messaging container
 
-		setupAndMountGraphMessagingTarget(endpointServer1);
-		setupAndMountGraphMessagingTarget(endpointServer2);
-		setupAndMountGraphMessagingTarget(endpointServer3);
+		setupAndMountGraphMessagingContainer(endpointServer1);
+		setupAndMountGraphMessagingContainer(endpointServer2);
+		setupAndMountGraphMessagingContainer(endpointServer3);
 
 		// start the server
 

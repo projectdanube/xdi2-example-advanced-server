@@ -3,11 +3,11 @@ package xdi2.example.server.contributor.database;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
-import xdi2.messaging.target.contributor.Contributor;
-import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
+import xdi2.messaging.container.contributor.Contributor;
+import xdi2.messaging.container.impl.graph.GraphMessagingContainer;
 import xdi2.server.impl.standalone.XDIStandaloneServer;
 import xdi2.transport.impl.http.HttpTransport;
-import xdi2.transport.registry.impl.uri.UriMessagingTargetRegistry;
+import xdi2.transport.registry.impl.uri.UriMessagingContainerRegistry;
 
 public class EndpointServerSample {
 
@@ -25,12 +25,12 @@ public class EndpointServerSample {
 		// add a custom contributor (this can also be done in the applicationContext.xml config file)
 
 		HttpTransport http = endpointServer.getEndpointServlet().getHttpTransport();
-		UriMessagingTargetRegistry registry = http.getUriMessagingTargetRegistry();
-		GraphMessagingTarget graphMessagingTarget = (GraphMessagingTarget) registry.getMessagingTarget("/");
+		UriMessagingContainerRegistry registry = http.getUriMessagingContainerRegistry();
+		GraphMessagingContainer graphMessagingContainer = (GraphMessagingContainer) registry.getMessagingContainer("/");
 
 		Contributor contributor = new BooksConnector();
-		contributor.init(graphMessagingTarget);
-		graphMessagingTarget.getContributors().addContributor(contributor);
+		contributor.init(graphMessagingContainer);
+		graphMessagingContainer.getContributors().addContributor(contributor);
 
 		// start the server
 

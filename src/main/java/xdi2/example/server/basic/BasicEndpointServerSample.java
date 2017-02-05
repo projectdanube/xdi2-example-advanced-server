@@ -6,11 +6,11 @@ import xdi2.core.Graph;
 import xdi2.core.features.secrettokens.SecretTokens;
 import xdi2.core.impl.memory.MemoryGraphFactory;
 import xdi2.core.syntax.XDIAddress;
-import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
-import xdi2.messaging.target.interceptor.impl.BootstrapInterceptor;
-import xdi2.messaging.target.interceptor.impl.linkcontract.LinkContractInterceptor;
-import xdi2.messaging.target.interceptor.impl.security.secrettoken.SecretTokenInterceptor;
-import xdi2.messaging.target.interceptor.impl.security.secrettoken.StaticSecretTokenValidator;
+import xdi2.messaging.container.impl.graph.GraphMessagingContainer;
+import xdi2.messaging.container.interceptor.impl.BootstrapInterceptor;
+import xdi2.messaging.container.interceptor.impl.linkcontract.LinkContractInterceptor;
+import xdi2.messaging.container.interceptor.impl.security.secrettoken.SecretTokenInterceptor;
+import xdi2.messaging.container.interceptor.impl.security.secrettoken.StaticSecretTokenValidator;
 import xdi2.server.impl.standalone.XDIStandaloneServer;
 
 public class BasicEndpointServerSample {
@@ -21,11 +21,11 @@ public class BasicEndpointServerSample {
 
 		XDIStandaloneServer endpointServer = XDIStandaloneServer.newServer();
 
-		// set up graph messaging target
+		// set up graph messaging container
 
 		Graph graph = MemoryGraphFactory.getInstance().openGraph();
-		GraphMessagingTarget messagingTarget = new GraphMessagingTarget();
-		messagingTarget.setGraph(graph);
+		GraphMessagingContainer messagingContainer = new GraphMessagingContainer();
+		messagingContainer.setGraph(graph);
 
 		// add interceptors
 
@@ -45,13 +45,13 @@ public class BasicEndpointServerSample {
 
 		LinkContractInterceptor li = new LinkContractInterceptor();
 
-		messagingTarget.getInterceptors().addInterceptor(bi);
-		messagingTarget.getInterceptors().addInterceptor(sti);
-		messagingTarget.getInterceptors().addInterceptor(li);
+		messagingContainer.getInterceptors().addInterceptor(bi);
+		messagingContainer.getInterceptors().addInterceptor(sti);
+		messagingContainer.getInterceptors().addInterceptor(li);
 
-		// mount messaging target
+		// mount messaging container
 
-		endpointServer.getEndpointServlet().getHttpTransport().getUriMessagingTargetRegistry().mountMessagingTarget("/", messagingTarget);
+		endpointServer.getEndpointServlet().getHttpTransport().getUriMessagingContainerRegistry().mountMessagingContainer("/", messagingContainer);
 
 		// start the server
 

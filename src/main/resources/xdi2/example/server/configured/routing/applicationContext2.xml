@@ -5,10 +5,10 @@
 
 	<!-- XDI ENDPOINT REGISTRY AND TRANSPORT -->
 
-	<bean id="UriMessagingTargetRegistry" class="xdi2.transport.registry.impl.uri.UriMessagingTargetRegistry" init-method="init" destroy-method="shutdown" />
+	<bean id="UriMessagingContainerRegistry" class="xdi2.transport.registry.impl.uri.UriMessagingContainerRegistry" init-method="init" destroy-method="shutdown" />
 
 	<bean id="HttpTransport" class="xdi2.transport.impl.http.HttpTransport" init-method="init" destroy-method="shutdown">
-		<property name="uriMessagingTargetRegistry" ref="UriMessagingTargetRegistry" />
+		<property name="uriMessagingContainerRegistry" ref="UriMessagingContainerRegistry" />
 		<property name="interceptors">
 			<util:list>
 				<bean class="xdi2.transport.impl.http.interceptor.impl.DebugHttpTransportInterceptor" />
@@ -36,8 +36,8 @@
 	<bean id="XdiAgent" class="xdi2.agent.impl.XDIBasicAgent">
 		<property name="agentRouters">
 			<util:list>
-				<bean class="xdi2.agent.routing.impl.local.XDIMessagingTargetRegistryAgentRouter">
-					<property name="messagingTargetRegistry" ref="UriMessagingTargetRegistry" />
+				<bean class="xdi2.agent.routing.impl.local.XDIMessagingContainerRegistryAgentRouter">
+					<property name="messagingContainerRegistry" ref="UriMessagingContainerRegistry" />
 				</bean>
 				<bean class="xdi2.agent.routing.impl.http.XDIHttpDiscoveryAgentRouter">
 					<property name="xdiDiscoveryClient" ref="XdiDiscoveryClient" />
@@ -47,22 +47,22 @@
 	</bean>
 
 	<!-- MESSAGING TARGET at / -->
-	<!-- MessagingTarget: GraphMessagingTarget backed by a MemoryGraph -->
+	<!-- MessagingContainer: GraphMessagingContainer backed by a MemoryGraph -->
 
 	<bean id="graphfactory1" class="xdi2.core.impl.memory.MemoryGraphFactory">
 	</bean>
 
 	<bean id="graph1" factory-bean="graphfactory1" factory-method="openGraph" />
 
-	<bean name="/graph" class="xdi2.messaging.target.impl.graph.GraphMessagingTarget">
+	<bean name="/graph" class="xdi2.messaging.container.impl.graph.GraphMessagingContainer">
 		<property name="graph" ref="graph1" />
 		<property name="interceptors">
 			<util:list>
-				<bean class="xdi2.messaging.target.interceptor.impl.BootstrapInterceptor">
+				<bean class="xdi2.messaging.container.interceptor.impl.BootstrapInterceptor">
 					<property name="bootstrapOwner" value="+!:uuid:0000" />
 				</bean>
-				<bean class="xdi2.messaging.target.interceptor.impl.ToInterceptor" />
-				<bean class="xdi2.messaging.target.interceptor.impl.RefInterceptor" />
+				<bean class="xdi2.messaging.container.interceptor.impl.ToInterceptor" />
+				<bean class="xdi2.messaging.container.interceptor.impl.RefInterceptor" />
 			</util:list>
 		</property>
 	</bean>
